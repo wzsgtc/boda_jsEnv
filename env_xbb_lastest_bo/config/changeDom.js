@@ -1,6 +1,12 @@
-var canvassss=document.createElement("canvas")
-var cccc=canvassss.getContext("2d")
-var aaaaaa=
+let canvassss=document.createElement("canvas")
+let cccc=canvassss.getContext("2d")
+let localstorage__={
+
+}
+for(let i in localStorage){
+    localstorage__[i]=localStorage[i]
+}
+let aaaaaa=
 `
 bodavm.memory.location={
     origin:"${location.origin}",
@@ -11,8 +17,11 @@ bodavm.memory.location={
     port:"${location.port}",
     protocol:"${location.protocol}",
     host:"${location.host}",
-    ancestorOrigins:"${JSON.stringify(location.ancestorOrigins)}",
-    hostname:"${location.hostname}"
+    ancestorOrigins:'${JSON.stringify(location.ancestorOrigins)}',
+    hostname:"${location.hostname}",
+    _href:"${location.href}",
+    _search:"${location.search}",
+
 };
 
 bodavm.memory.document={
@@ -21,7 +30,7 @@ bodavm.memory.document={
     documentURI:"${document.documentURI}",
     compatMode:"${document.compatMode}",
     dir:"${document.dir}",
-    title:"${document.title}",
+    title:'${document.title}',
     designMode:"${document.designMode}",
     readyState:"${document.readyState}",
     contentType:"${document.contentType}",
@@ -32,11 +41,22 @@ bodavm.memory.document={
     hidden:"${document.hidden}",
     onmousemove:${document.onmousemove},
     onselectionchange:${document.onselectionchange},
+    cookie:'${document.cookie}'
     
 };
 
+bodavm.memory.cookies_=bodavm.memory.document['cookie'].split(';')
+if (bodavm.memory.cookies_[0]){
+    for (var i = 0; i < bodavm.memory.cookies_.length; i++) {
+        var cookie = bodavm.memory.cookies_[i].split("=");
+        bodavm.memory.globalInit.jsonCookie[cookie[0]] = cookie[1];
+      }
+}
+
+
+
 bodavm.memory.htmldivelement={
-    align:"${HTMLDivElement.align}",
+     align:"${HTMLDivElement.align}",
 
 };
 
@@ -45,10 +65,6 @@ bodavm.memory.history={
 };
 
 bodavm.memory.screen={
-    width:${screen.width},
-    height:${screen.height},
-    availWidth:${screen.availWidth},
-    availHeight:${screen.availHeight},
     pixelDepth:${screen.pixelDepth},
     colorDepth:${screen.colorDepth},
     availLeft:${screen.availLeft},
@@ -73,15 +89,15 @@ bodavm.memory.navigator={
     platform:'${navigator.platform}',
     webkitPersistentStorage:${JSON.stringify(navigator.webkitPersistentStorage)},
     connection:${JSON.stringify(navigator.connection)},
-    javaEnabled:${navigator.javaEnabled()}
+    javaEnabled:${navigator.javaEnabled()},
+    product:'${navigator.product}',
+    vendorSub:${JSON.stringify(navigator.vendorSub)},
+    deviceMemory:${navigator.deviceMemory},
+    maxTouchPoints:${navigator.maxTouchPoints}
 };
 bodavm.memory.window={
     name:${JSON.stringify(window.name)},
-    innerWidth:1440,
-    innerHeight:817,
     origin:${JSON.stringify(window.origin)},
-    outerWidth:1440,
-    outerHeight:920,
     defaultStatus:${JSON.stringify(window.defaultStatus)},
     defaultstatus:${JSON.stringify(window.defaultstatus)},
     devicePixelRatio:${window.devicePixelRatio},
@@ -90,39 +106,36 @@ bodavm.memory.window={
     status:${JSON.stringify(window.status)},
     onmessage:${window.onmessage},
     onbeforeunload:${window.onbeforeunload},
+    closed:${window.closed},
+    isSecureContext:${window.isSecureContext},
+    onappinstalled:${window.onappinstalled},
+    onbeforeinstallprompt:${window.onbeforeinstallprompt},
+    onbeforexrselect:${onbeforexrselect},
+    onabort:${onabort},
+    onblur:${onblur},
+    oncancel:${oncancel},
+    oncanplay:${oncanplay},
+    oncanplaythrough:${oncanplaythrough},
+    onsearch:${onsearch},
+    opener:${opener},
+    // frameElement:${frameElement},
+    isSecureContext:${window.isSecureContext},
+    // customElements:${window.customElements}
+    
 
 };
 
-bodavm.memory.canvas={};
-bodavm.memory.canvas2D={
-    direction: "${cccc.direction}",
-    fillStyle: "${cccc.fillStyle}",
-    filter: "${cccc.filter}",
-    font: "${cccc.font}",
-    fontKerning: "${cccc.fontKerning}",
-    fontStretch: "${cccc.fontStretch}",
-    fontVariantCaps: "${cccc.fontVariantCaps}",
-    globalAlpha: ${cccc.globalAlpha},
-    globalCompositeOperation: "${cccc.globalCompositeOperation}",
-    imageSmoothingEnabled: ${cccc.imageSmoothingEnabled},
-    imageSmoothingQuality: "${cccc.imageSmoothingQuality}",
-    letterSpacing: "${cccc.letterSpacing}",
-    lineCap: "${cccc.lineCap}",
-    lineDashOffset: ${cccc.lineDashOffset},
-    lineJoin: "${cccc.lineJoin}",
-    lineWidth: ${cccc.lineWidth},
-    miterLimit: ${cccc.miterLimit},
-    shadowBlur: ${cccc.shadowBlur},
-    shadowColor: "${cccc.shadowColor}",
-    shadowOffsetX: ${cccc.shadowOffsetX},
-    shadowOffsetY: ${cccc.shadowOffsetY},
-    strokeStyle: "${cccc.strokeStyle}",
-    textAlign: "${cccc.textAlign}",
-    textBaseline: "${cccc.textBaseline}",
-    textRendering: "${cccc.textRendering}",
-    wordSpacing: "${cccc.wordSpacing}",
-}
-// bodavm.memory.localStorage={}
+
+bodavm.memory.localStorage=${JSON.stringify(localstorage__)}
+
+
+bodavm.memory.Performance={
+    'getEntriesByType':${JSON.stringify(performance.getEntriesByType('resource'))},
+    'timeOrigin':${performance.timeOrigin}
+
+
+
+};
 
 `
 

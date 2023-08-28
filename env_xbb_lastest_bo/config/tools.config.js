@@ -18,9 +18,12 @@ function getCode(){
     let code=""
     code+=getFile("toolsFunc")
     // code+=getFile("toolsJsSoup")
-    code+=getFile("toolsParseHtml")
-    code+=getFile("envFunc")
-    code+=getFile("toolsPlugin")
+    // code+=getFile("toolsParseHtml")
+    code+=getFile("envFuncBom")
+    code+=getFile("envFuncDom")
+    code+=getFile("envFuncJSApi")
+
+    code+=getFile("toolsPromise")
     return code
 }
 module.exports={
